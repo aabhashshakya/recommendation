@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import SearchBooks from "./components/SearchBooks";
 
 function App() {
   const [bookList, setBookList] = useState(null);
@@ -40,6 +41,10 @@ function App() {
       ) : (
         <h1>no books</h1>
       )}
+
+      <div>
+        <SearchBooks />
+      </div>
     </div>
   );
 }
