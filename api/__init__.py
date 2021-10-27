@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager, login_manager
 from flask_jwt_extended import JWTManager
+import pandas as pd
 
 db= SQLAlchemy() #creating an instance of the SQLAlchemy
 DB_NAME = "database.db"
+store_data_uncleaned = pd.read_csv('api/Dataset.csv', low_memory=False)  
 
 def create_app():
     app = Flask(__name__)

@@ -13,8 +13,8 @@ class User(db.Model, UserMixin, SerializerMixin):
     username = db.Column(db.String(30), unique= True)
     email = db.Column(db.String(200), unique= True)
     password_hash = db.Column(db.String(128))
-    search_history = db.relationship('SearchHistory') #to denote 1 to many relationship with SearchHistory 
-    purchased_books = db.relationship('PurchaseHistory')   
+    cart = db.relationship('CartItem') #to denote 1 to many relationship with SearchHistory 
+    purchased_books = db.relationship('PurchasedItem')   
 
     def check_password(self, password): 
         return check_password_hash(self.password_hash, password)
@@ -58,17 +58,17 @@ class User(db.Model, UserMixin, SerializerMixin):
         return check_password_hash(self.password_hash, password)
         
         
-class PurchaseHistory(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key = True)
+class PurchasedItem(db.Model, SerializerMixin):
+    purchase_id = db.Column(db.Integer, primary_key = True)
     book_isbn = db.Column(db.Integer)
-    book_name = db.Column(db.String(200))
     count = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone = True), default = datetime.now(pytz.timezone('Asia/Kathmandu')))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) #to relate the purchase history with the user
     
 
-class SearchHistory(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key = True)
-    search_query = db.Column(db.String(200))
+class CartItem(db.Model, SerializerMixin):
+    cart_id = db.Column(db.Integer, primary_key = True)
+    book_isbn = db.Column(db.Integer)
+    count = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone = True), default = datetime.now(pytz.timezone('Asia/Kathmandu')))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 

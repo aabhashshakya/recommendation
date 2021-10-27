@@ -23,8 +23,9 @@ def signup():
         login_user(new_user, remember=True) #log the user in to flask_login
         access_token = create_access_token(identity=username) #JWT token
         return jsonify(msg='User successfully created', user_id = current_user.id, access_token = access_token), 201 
-    except AssertionError as exception_message: 
-        return jsonify(msg='Error: {}. '.format(exception_message)), 400
+    except Exception as e: 
+        print(e)
+        return jsonify(msg="Some Error occured", errmsg=str(e)), 400
     
     
 @auth.route('/login', methods=["POST"])
